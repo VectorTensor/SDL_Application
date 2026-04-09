@@ -48,6 +48,7 @@ struct SDLApplication
             SDL_RenderPresent(mRenderer);
 
         }
+        delete sprite_animator;
 
     }
 
