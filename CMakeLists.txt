@@ -5,7 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(SDL3 CONFIG REQUIRED)
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
-add_executable(spriteAnimation src/main.cpp)
+add_executable(spriteAnimation src/main.cpp
+        src/utils/SpriteAnimator/spriteAnimator.cpp
+        )
+
+target_include_directories(spriteAnimation PRIVATE src)
+
 target_link_libraries(spriteAnimation PRIVATE SDL3::SDL3)
 
 # On Windows, copy SDL3.dll to the build directory

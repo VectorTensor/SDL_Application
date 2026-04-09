@@ -1,22 +1,26 @@
 #include <SDL3/SDL.h>
 
+#include "utils/SpriteAnimator/spriteAnimator.h"
+
 
 struct SDLApplication
 {
     SDL_Window* mWindow;
+    SDL_Renderer* mRenderer;
     bool mRunning = true;
 
-    SDLApplication()
-    {
+    SDLApplication(){
 
         SDL_Init(SDL_INIT_VIDEO);
 
-        mWindow = SDL_CreateWindowAndRenderer("Test Window", 600, 400, SDL_WINDOW_RESIZABLE, &window, &renderer);
+        SDL_CreateWindowAndRenderer("Test Window", 600, 400, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
 
 
     }
     ~SDLApplication()
     {
+        SDL_DestroyRenderer(mRenderer);
+        SDL_DestroyWindow(mWindow);
         SDL_Quit();
     }
 
@@ -24,9 +28,11 @@ struct SDLApplication
     {
 
         SDL_Event event;
+        auto sprite_animator = new SpriteAnimator(*mRenderer);
 
         while (mRunning)
         {
+            SDL_RenderClear(mRenderer);
             while (SDL_PollEvent(&event))
             {
                 if (event.type == SDL_EVENT_QUIT)
@@ -34,7 +40,13 @@ struct SDLApplication
                     mRunning = false;
 
                 }
+                if (event.type == SDL_EVENT_KEY_DOWN) {
+                    sprite_animator->UpdateFrame();
+                }
             }
+            sprite_animator->Render();
+            SDL_RenderPresent(mRenderer);
+
         }
 
     }
@@ -44,6 +56,7 @@ struct SDLApplication
 
 int main(int argc, char* argv[])
 {
-    SDL_Log("Hello World");
+    SDLApplication app;
+    app.MainLoop();
 
 }
