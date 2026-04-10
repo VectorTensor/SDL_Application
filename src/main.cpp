@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 
 #include "utils/SpriteAnimator/spriteAnimator.h"
+#include <vector>
 
 
 struct SDLApplication
@@ -8,14 +9,18 @@ struct SDLApplication
     SDL_Window* mWindow;
     SDL_Renderer* mRenderer;
     bool mRunning = true;
+    std::vector<SpriteAnimator> sprite_animators;
 
-    SDLApplication(){
+    SDLApplication() {
 
         SDL_Init(SDL_INIT_VIDEO);
 
         SDL_CreateWindowAndRenderer("Test Window", 600, 400, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
 
 
+    }
+    void push_sprite_animator(const SpriteAnimator& sprite_animator) {
+        sprite_animators.push_back(sprite_animator);
     }
     ~SDLApplication()
     {
@@ -29,6 +34,7 @@ struct SDLApplication
 
         SDL_Event event;
         SpriteAnimator sprite_animator(*mRenderer, "assets/asset.png");
+        push_sprite_animator(sprite_animator);
 
         while (mRunning)
         {
@@ -40,11 +46,14 @@ struct SDLApplication
                     mRunning = false;
 
                 }
-                if (event.type == SDL_EVENT_KEY_DOWN) {
-                    sprite_animator.UpdateFrame();
-                }
+                // if (event.type == SDL_EVENT_KEY_DOWN) {
+                //     sprite_animator.UpdateFrame();
+                // }
             }
-            sprite_animator.Render();
+            for (auto& s: sprite_animators) {
+                s.UpdateFrame();
+                s.Render();
+            }
             SDL_RenderPresent(mRenderer);
 
         }

@@ -9,7 +9,7 @@
 #include <SDL3/SDL_oldnames.h>
 
 SpriteAnimator::SpriteAnimator(SDL_Renderer &renderer, const char* asset_path):
-mSrcRect({ 0, 60, 40, 40}),
+mSrcRect({ 0, 0, 40, 40}),
 mDestRect({ 0, 0, 120, 120 }){
     mRenderer = &renderer;
     mSurface = SDL_LoadPNG(asset_path);
