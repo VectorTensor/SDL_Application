@@ -8,16 +8,16 @@
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_oldnames.h>
 
-SpriteAnimator::SpriteAnimator(SDL_Renderer &renderer) {
+SpriteAnimator::SpriteAnimator(SDL_Renderer &renderer, const char* asset_path):
+mSrcRect({ 0, 60, 40, 40}),
+mDestRect({ 0, 0, 120, 120 }){
     mRenderer = &renderer;
-    mSurface = SDL_LoadPNG("assets/asset.png");
+    mSurface = SDL_LoadPNG(asset_path);
     if (mSurface == nullptr) {
         SDL_Log("Failed to load image: %s", SDL_GetError());
     }
     mTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
-    mDestRect = { 0, 0, 120, 120 };
-    mSrcRect = { 0, 60, 40, 40};
-    int frameCount = 1;
+    frameCount = 1;
 }
 
 SpriteAnimator::~SpriteAnimator() = default;
@@ -25,7 +25,7 @@ SpriteAnimator::~SpriteAnimator() = default;
 void SpriteAnimator::UpdateFrame() {
 
     const float x_next = static_cast<float>(40 * frameCount) + mSrcRect.x;
-    if (x_next >= 428){
+    if (x_next >= 428-40){
         frameCount = 1;
         mSrcRect.x = 0;
     }
@@ -36,7 +36,7 @@ void SpriteAnimator::UpdateFrame() {
     }
 }
 
-void SpriteAnimator::Render() {
+void SpriteAnimator::Render() const {
 
     SDL_RenderTexture(mRenderer, mTexture, &mSrcRect, &mDestRect );
 }

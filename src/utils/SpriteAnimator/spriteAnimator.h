@@ -1,6 +1,7 @@
 #ifndef SPRITE_ANIMATOR_H
 #define SPRITE_ANIMATOR_H
 
+#include <string>
 #include <SDL3/SDL_render.h>
 
 class SpriteAnimator {
@@ -14,13 +15,13 @@ private:
 
 public:
     // Constructor declaration
-    SpriteAnimator(SDL_Renderer& renderer);
+    SpriteAnimator(SDL_Renderer& renderer, const char *asset_path);
 
     // Destructor (important for cleanup)
     ~SpriteAnimator();
 
     void UpdateFrame();
-    void Render();
+    void Render() const;
 };
 
 #endif

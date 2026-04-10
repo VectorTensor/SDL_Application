@@ -28,7 +28,7 @@ struct SDLApplication
     {
 
         SDL_Event event;
-        auto sprite_animator = new SpriteAnimator(*mRenderer);
+        SpriteAnimator sprite_animator(*mRenderer, "assets/asset.png");
 
         while (mRunning)
         {
@@ -41,14 +41,13 @@ struct SDLApplication
 
                 }
                 if (event.type == SDL_EVENT_KEY_DOWN) {
-                    sprite_animator->UpdateFrame();
+                    sprite_animator.UpdateFrame();
                 }
             }
-            sprite_animator->Render();
+            sprite_animator.Render();
             SDL_RenderPresent(mRenderer);
 
         }
-        delete sprite_animator;
 
     }
 
