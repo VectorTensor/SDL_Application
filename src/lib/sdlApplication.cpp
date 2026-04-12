@@ -46,14 +46,13 @@ void SDLApplication::Input() {
             // for (auto& s: sprite_animators) {
             //     s.UpdateFrame();
             // }
-            for (auto& g: game_objects) {
-                g->Update();
-            }
         }
     }
 }
 void SDLApplication::Update() {
-
+    for (auto& g: game_objects) {
+        g->Update();
+    }
 }
 
 void SDLApplication::Render() {
@@ -83,7 +82,6 @@ void SDLApplication::MainLoop()
         sprite
         );
     push_sprite_animator(sprite_animator);
-    Uint64 frames = 0;
     Uint64 lastTime = 0;
     Uint64 fps= 0;
     TestGameObject test_game_object(*mRenderer);
@@ -95,13 +93,11 @@ void SDLApplication::MainLoop()
     {
         Uint64 currentTick = SDL_GetTicks();
         Tick();
-        frames ++;
         fps++;
         Uint64 deltaTime = SDL_GetTicks() - currentTick;
         if (currentTick > lastTime + 1000) {
 
             lastTime = currentTick;
-            frames = 0;
             std::string title;
             title = std::format("FPS: {}",  std::to_string(fps));
 

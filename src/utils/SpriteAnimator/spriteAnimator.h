@@ -27,6 +27,8 @@ private:
     int numCols;
     int xIncrement;
     int yIncrement;
+    int frameTimeMs = 100;
+    float currentTime = 0;
 
 public:
     // Constructor declaration
@@ -42,6 +44,7 @@ public:
 
     void UpdateFrame();
     void Render() const;
+    void Reset();
 };
 
 #endif

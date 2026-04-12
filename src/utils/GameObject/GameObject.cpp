@@ -10,6 +10,7 @@ void GameObject::SwitchState(const char* state_name) {
     for (auto& s: states) {
         if (strcmp(s.name, state_name) == 0) {
             current_state = &s;
+            current_state->sprite_animator.Reset();
         }
     }
 

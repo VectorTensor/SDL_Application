@@ -3,10 +3,8 @@
 #include <SDL3/SDL_surface.h>
 #include "utils/SpriteAnimator/spriteAnimator.h"
 
-#include <iostream>
-#include <ostream>
 #include <SDL3/SDL_log.h>
-#include <SDL3/SDL_oldnames.h>
+#include <SDL3/SDL_timer.h>
 
 SpriteAnimator::SpriteAnimator(
     SDL_Renderer &renderer,
@@ -35,20 +33,29 @@ SpriteAnimator::SpriteAnimator(
 SpriteAnimator::~SpriteAnimator() = default;
 
 void SpriteAnimator::UpdateFrame() {
-    const float x_next = static_cast<float>(xIncrement * frameCount) + mSrcRect.x;
-    if ( x_next >= spriteWidth){
-        frameCount = 0;
-        mSrcRect.x = 0;
-    }
-    else {
+    auto deltaTime = SDL_GetTicks() - currentTime;
+    if (deltaTime > frameTimeMs) {
+        currentTime = SDL_GetTicks();
+        const float x_next = static_cast<float>(xIncrement * frameCount) + mSrcRect.x;
+        if ( x_next >= spriteWidth){
+            frameCount = 0;
+            mSrcRect.x = 0;
+        }
+        else {
 
-        mSrcRect.x = x_next;
-        frameCount++;
+            mSrcRect.x = x_next;
+            frameCount++;
+        }
     }
-}
+
+    }
 
 void SpriteAnimator::Render() const {
 
     SDL_RenderTexture(mRenderer, mTexture, &mSrcRect, &mDestRect );
+}
+
+void SpriteAnimator::Reset() {
+    mSrcRect.x = 0;
 }
 
