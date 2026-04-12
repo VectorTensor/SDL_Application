@@ -25,7 +25,7 @@ SpriteAnimator::SpriteAnimator(
         SDL_Log("Failed to load image: %s", SDL_GetError());
     }
     mTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
-    frameCount = 1;
+    frameCount = 0;
     mSrcRect = src_rect;
     mDestRect = dest_rect;
     spriteHeight = sprite_height;
@@ -39,8 +39,9 @@ SpriteAnimator::SpriteAnimator(
 SpriteAnimator::~SpriteAnimator() = default;
 
 void SpriteAnimator::UpdateFrame() {
-    if (const float x_next = static_cast<float>(xIncrement * frameCount) + mSrcRect.x; x_next >= spriteWidth-xIncrement){
-        frameCount = 1;
+    const float x_next = static_cast<float>(xIncrement * frameCount) + mSrcRect.x;
+    if ( x_next >= spriteWidth){
+        frameCount = 0;
         mSrcRect.x = 0;
     }
     else {

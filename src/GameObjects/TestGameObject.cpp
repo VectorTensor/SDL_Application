@@ -7,22 +7,23 @@
 void TestGameObject::Initialize() {
 
     SpriteAnimator sprite_animator(*mRenderer,
-        "assets/warrior-packs/Fighter/Idle.png",
+        "assets/warrior-packs/Fighter/Attack_1.png",
         {0,0,128,128},
         {0,0,128,128},
         128,
-        768,
+        512,
         1,
-        6
+      4
         );
 
 
     State idle_state = {
         "idle",
-        &sprite_animator
+        sprite_animator
     };
 
     AddState(idle_state);
+    current_state = &states[0];
 
 
 

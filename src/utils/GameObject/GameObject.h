@@ -8,7 +8,7 @@
 
 struct State {
     char* name;
-    SpriteAnimator* sprite_animator;
+    SpriteAnimator sprite_animator;
 };
 
 class GameObject {

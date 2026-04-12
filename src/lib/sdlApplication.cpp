@@ -43,12 +43,12 @@ void SDLApplication::Input() {
 
         }
         if (event.type == SDL_EVENT_KEY_DOWN) {
-            for (auto& s: sprite_animators) {
-                s.UpdateFrame();
-            }
-            // for (auto& g: game_objects) {
-            //     g->Update();
+            // for (auto& s: sprite_animators) {
+            //     s.UpdateFrame();
             // }
+            for (auto& g: game_objects) {
+                g->Update();
+            }
         }
     }
 }
@@ -58,12 +58,12 @@ void SDLApplication::Update() {
 
 void SDLApplication::Render() {
     SDL_RenderClear(mRenderer);
-    for (auto& s: sprite_animators) {
-        s.Render();
-    }
-    // for (auto& g: game_objects) {
-    //     g->Render();
+    // for (auto& s: sprite_animators) {
+    //     s.Render();
     // }
+    for (auto& g: game_objects) {
+        g->Render();
+    }
     SDL_RenderPresent(mRenderer);
 }
 
@@ -85,7 +85,6 @@ void SDLApplication::MainLoop()
     Uint64 fps= 0;
     TestGameObject test_game_object(*mRenderer);
     test_game_object.Initialize();
-    test_game_object.SwitchState("idle");
     game_objects.push_back(&test_game_object);
 
 

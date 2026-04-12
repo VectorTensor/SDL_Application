@@ -11,7 +11,7 @@ private:
     SDL_Renderer* mRenderer;
     SDL_FRect mSrcRect;
     SDL_FRect mDestRect;
-    int frameCount;
+    int frameCount =0 ;
     int spriteHeight;
     int spriteWidth;
     int numRows;
