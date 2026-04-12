@@ -70,7 +70,10 @@ struct SDLApplication
     void MainLoop()
     {
 
-        SpriteAnimator sprite_animator(*mRenderer, "assets/asset.png");
+        SpriteAnimator sprite_animator(*mRenderer,
+            "assets/asset.png",
+            {0,0,40,40},
+            {0,0,120,120});
         push_sprite_animator(sprite_animator);
         Uint64 frames = 0;
         Uint64 lastTime = 0;

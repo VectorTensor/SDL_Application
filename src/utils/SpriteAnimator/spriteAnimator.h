@@ -15,7 +15,12 @@ private:
 
 public:
     // Constructor declaration
-    SpriteAnimator(SDL_Renderer& renderer, const char *asset_path);
+    SpriteAnimator(
+        SDL_Renderer& renderer,
+        const char *asset_path,
+        SDL_FRect src_rect,
+        SDL_FRect dest_rect
+        );
 
     // Destructor (important for cleanup)
     ~SpriteAnimator();

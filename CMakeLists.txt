@@ -7,7 +7,9 @@ find_package(SDL3 CONFIG REQUIRED)
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(spriteAnimation src/main.cpp
         src/utils/SpriteAnimator/spriteAnimator.cpp
-        )
+        src/utils/GameObject/GameObject.cpp
+        src/utils/GameObject/GameObject.h
+)
 
 target_include_directories(spriteAnimation PRIVATE src)
 
