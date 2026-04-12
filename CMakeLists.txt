@@ -9,6 +9,8 @@ add_executable(spriteAnimation src/main.cpp
         src/utils/SpriteAnimator/spriteAnimator.cpp
         src/utils/GameObject/GameObject.cpp
         src/utils/GameObject/GameObject.h
+        src/lib/sdlApplication.cpp
+        src/lib/sdlApplication.h
 )
 
 target_include_directories(spriteAnimation PRIVATE src)
