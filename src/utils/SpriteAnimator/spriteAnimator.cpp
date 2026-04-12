@@ -12,7 +12,11 @@ SpriteAnimator::SpriteAnimator(
     SDL_Renderer &renderer,
     const char* asset_path,
     SDL_FRect src_rect,
-    SDL_FRect dest_rect
+    SDL_FRect dest_rect,
+    int sprite_height,
+    int sprite_width,
+    int num_rows,
+    int num_cols
     )
 {
     mRenderer = &renderer;
@@ -24,12 +28,18 @@ SpriteAnimator::SpriteAnimator(
     frameCount = 1;
     mSrcRect = src_rect;
     mDestRect = dest_rect;
+    spriteHeight = sprite_height;
+    spriteWidth = sprite_width;
+    numRows = num_rows;
+    numCols = num_cols;
+    xIncrement = spriteWidth/numCols;
+    yIncrement = spriteHeight/numRows;
 }
 
 SpriteAnimator::~SpriteAnimator() = default;
 
 void SpriteAnimator::UpdateFrame() {
-    if (const float x_next = static_cast<float>(40 * frameCount) + mSrcRect.x; x_next >= 428-40){
+    if (const float x_next = static_cast<float>(xIncrement * frameCount) + mSrcRect.x; x_next >= spriteWidth-xIncrement){
         frameCount = 1;
         mSrcRect.x = 0;
     }

@@ -12,6 +12,12 @@ private:
     SDL_FRect mSrcRect;
     SDL_FRect mDestRect;
     int frameCount;
+    int spriteHeight;
+    int spriteWidth;
+    int numRows;
+    int numCols;
+    int xIncrement;
+    int yIncrement;
 
 public:
     // Constructor declaration
@@ -19,8 +25,12 @@ public:
         SDL_Renderer& renderer,
         const char *asset_path,
         SDL_FRect src_rect,
-        SDL_FRect dest_rect
-        );
+        SDL_FRect dest_rect,
+        int sprite_height,
+        int sprite_width,
+        int num_rows,
+        int num_cols
+            );
 
     // Destructor (important for cleanup)
     ~SpriteAnimator();

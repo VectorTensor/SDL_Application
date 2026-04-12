@@ -8,20 +8,22 @@
 
 struct State {
     char* name;
-    char* sprite_sheet_path;
     SpriteAnimator* sprite_animator;
 };
 
 class GameObject {
+protected:
     std::vector<State> states;
-    State current_state;
+    State* current_state;
+    SDL_Renderer* mRenderer;
 
 public:
-    void AddState(const State &state);
+    void AddState(State &state);
     void SwitchState(const char* state_name);
     void Render() const;
-    GameObject();
-    ~GameObject();
+    GameObject(SDL_Renderer &renderer);
+    virtual void Initialize() = 0;
+    void Update();
 
 
 

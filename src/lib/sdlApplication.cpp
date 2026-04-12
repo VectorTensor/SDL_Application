@@ -1,17 +1,18 @@
-//
-// Created by Progressive Labs on 12/04/2026.
-//
 
 #include "sdlApplication.h"
 
 #include <format>
+#include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
+
+#include "GameObjects/TestGameObject.h"
+#include "utils/GameObject/GameObject.h"
 
 SDLApplication::SDLApplication() {
 
-        SDL_Init(SDL_INIT_VIDEO);
+    SDL_Init(SDL_INIT_VIDEO);
 
-        SDL_CreateWindowAndRenderer("Test Window", 600, 400, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
+    SDL_CreateWindowAndRenderer("Test Window", 600, 400, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
 
 
 }
@@ -45,6 +46,9 @@ void SDLApplication::Input() {
             for (auto& s: sprite_animators) {
                 s.UpdateFrame();
             }
+            // for (auto& g: game_objects) {
+            //     g->Update();
+            // }
         }
     }
 }
@@ -57,6 +61,9 @@ void SDLApplication::Render() {
     for (auto& s: sprite_animators) {
         s.Render();
     }
+    // for (auto& g: game_objects) {
+    //     g->Render();
+    // }
     SDL_RenderPresent(mRenderer);
 }
 
@@ -64,13 +71,23 @@ void SDLApplication::MainLoop()
 {
 
     SpriteAnimator sprite_animator(*mRenderer,
-        "assets/asset.png",
-        {0,0,40,40},
-        {0,0,120,120});
+        "assets/warrior-packs/Fighter/Idle.png",
+        {0,0,128,128},
+        {0,0,128,128},
+        128,
+        768,
+        1,
+        6
+        );
     push_sprite_animator(sprite_animator);
     Uint64 frames = 0;
     Uint64 lastTime = 0;
     Uint64 fps= 0;
+    TestGameObject test_game_object(*mRenderer);
+    test_game_object.Initialize();
+    test_game_object.SwitchState("idle");
+    game_objects.push_back(&test_game_object);
+
 
     while (mRunning)
     {
