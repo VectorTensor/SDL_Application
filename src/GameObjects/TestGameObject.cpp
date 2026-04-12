@@ -5,15 +5,17 @@
 #include "TestGameObject.h"
 
 void TestGameObject::Initialize() {
-
-    SpriteAnimator sprite_animator(*mRenderer,
+    SpriteInformation sprite = {
         "assets/warrior-packs/Fighter/Attack_1.png",
-        {0,0,128,128},
-        {0,0,128,128},
         128,
         512,
         1,
-      4
+        4
+    };
+    SpriteAnimator sprite_animator(*mRenderer,
+        {0,0,128,128},
+        {0,0,128,128},
+        sprite
         );
 
 

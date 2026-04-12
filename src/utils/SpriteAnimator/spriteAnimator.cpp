@@ -10,17 +10,13 @@
 
 SpriteAnimator::SpriteAnimator(
     SDL_Renderer &renderer,
-    const char* asset_path,
     SDL_FRect src_rect,
     SDL_FRect dest_rect,
-    int sprite_height,
-    int sprite_width,
-    int num_rows,
-    int num_cols
+    SpriteInformation sprite_information
     )
 {
     mRenderer = &renderer;
-    mSurface = SDL_LoadPNG(asset_path);
+    mSurface = SDL_LoadPNG(sprite_information.sprite_path);
     if (mSurface == nullptr) {
         SDL_Log("Failed to load image: %s", SDL_GetError());
     }
@@ -28,10 +24,10 @@ SpriteAnimator::SpriteAnimator(
     frameCount = 0;
     mSrcRect = src_rect;
     mDestRect = dest_rect;
-    spriteHeight = sprite_height;
-    spriteWidth = sprite_width;
-    numRows = num_rows;
-    numCols = num_cols;
+    spriteHeight = sprite_information.sprite_height;
+    spriteWidth = sprite_information.sprite_width;
+    numRows = sprite_information.num_rows;
+    numCols = sprite_information.num_cols;
     xIncrement = spriteWidth/numCols;
     yIncrement = spriteHeight/numRows;
 }

@@ -70,14 +70,17 @@ void SDLApplication::Render() {
 void SDLApplication::MainLoop()
 {
 
-    SpriteAnimator sprite_animator(*mRenderer,
+    SpriteInformation sprite = {
         "assets/warrior-packs/Fighter/Idle.png",
+         128,
+         512,
+         1,
+         6,
+    };
+    SpriteAnimator sprite_animator(*mRenderer,
         {0,0,128,128},
         {0,0,128,128},
-        128,
-        768,
-        1,
-        6
+        sprite
         );
     push_sprite_animator(sprite_animator);
     Uint64 frames = 0;

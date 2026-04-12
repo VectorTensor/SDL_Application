@@ -4,6 +4,15 @@
 #include <string>
 #include <SDL3/SDL_render.h>
 
+struct SpriteInformation{
+    char* sprite_path;
+    int sprite_height;
+    int sprite_width;
+    int num_rows;
+    int num_cols;
+
+};
+
 class SpriteAnimator {
 private:
     SDL_Surface* mSurface;
@@ -23,14 +32,10 @@ public:
     // Constructor declaration
     SpriteAnimator(
         SDL_Renderer& renderer,
-        const char *asset_path,
         SDL_FRect src_rect,
         SDL_FRect dest_rect,
-        int sprite_height,
-        int sprite_width,
-        int num_rows,
-        int num_cols
-            );
+        SpriteInformation sprite_information
+        );
 
     // Destructor (important for cleanup)
     ~SpriteAnimator();
