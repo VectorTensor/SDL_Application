@@ -46,6 +46,12 @@ void SDLApplication::Input() {
             // for (auto& s: sprite_animators) {
             //     s.UpdateFrame();
             // }
+            if (game_objects[0]->current == 1) {
+                game_objects[0]->SwitchState("fight");
+            }
+            else if (game_objects[0]->current == 0) {
+                game_objects[0]->SwitchState("jump");
+            }
         }
     }
 }

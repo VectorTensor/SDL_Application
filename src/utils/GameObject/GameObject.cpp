@@ -7,11 +7,13 @@ void GameObject::AddState(State &state) {
 }
 
 void GameObject::SwitchState(const char* state_name) {
+    int count = 0;
     for (auto& s: states) {
         if (strcmp(s.name, state_name) == 0) {
-            current_state = &s;
-            current_state->sprite_animator.Reset();
+            current = count;
+            states[current].sprite_animator.Reset();
         }
+        count++;
     }
 
 }
@@ -22,11 +24,11 @@ GameObject::GameObject(SDL_Renderer &renderer) {
 
 
 void GameObject::Update() {
-    current_state->sprite_animator.UpdateFrame();
+    states[current].sprite_animator.UpdateFrame();
 }
 
 void GameObject::Render() const {
-    current_state->sprite_animator.Render();
+    states[current].sprite_animator.Render();
 }
 
 State CreateNewState(

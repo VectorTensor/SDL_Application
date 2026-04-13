@@ -14,10 +14,10 @@ struct State {
 class GameObject {
 protected:
     std::vector<State> states;
-    State* current_state;
     SDL_Renderer* mRenderer;
 
 public:
+    int current = 0;
     void AddState(State &state);
     void SwitchState(const char* state_name);
     void Render() const;

@@ -31,7 +31,7 @@ void TestGameObject::Initialize() {
         );
     AddState(jump_state);
 
-    current_state = &states[1];
+    current = 1;
 
 
 }
