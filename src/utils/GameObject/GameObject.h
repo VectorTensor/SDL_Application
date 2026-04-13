@@ -7,7 +7,7 @@
 
 
 struct State {
-    char* name;
+    const char* name;
     SpriteAnimator sprite_animator;
 };
 
@@ -28,6 +28,14 @@ public:
 
 
 };
+
+State CreateNewState(
+    SpriteInformation sprite,
+    SDL_FRect scr_rect,
+    SDL_FRect dest_rect,
+    const char* name,
+    SDL_Renderer& renderer
+    );
 
 
 

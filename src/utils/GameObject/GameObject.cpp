@@ -29,4 +29,27 @@ void GameObject::Render() const {
     current_state->sprite_animator.Render();
 }
 
+State CreateNewState(
+    SpriteInformation sprite,
+    SDL_FRect src_rect,
+    SDL_FRect dest_rect,
+    const char* name,
+    SDL_Renderer& renderer
+    ) {
+
+    SpriteAnimator sprite_animator(renderer,
+        src_rect,
+        dest_rect,
+        sprite
+        );
+
+    State state = {
+        name,
+    sprite_animator
+    };
+
+    return state;
+
+
+}
 

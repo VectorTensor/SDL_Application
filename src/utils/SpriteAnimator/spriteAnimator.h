@@ -27,7 +27,7 @@ private:
     int numCols;
     int xIncrement;
     int yIncrement;
-    int frameTimeMs = 100;
+    int frameTimeMs = 500;
     float currentTime = 0;
 
 public:
