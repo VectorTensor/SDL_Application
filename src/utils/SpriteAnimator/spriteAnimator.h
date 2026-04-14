@@ -4,22 +4,21 @@
 #include <string>
 #include <SDL3/SDL_render.h>
 
+#include "utils/common/common.h"
+
+
 struct SpriteInformation{
     char* sprite_path;
-    int sprite_height;
-    int sprite_width;
     int num_rows;
     int num_cols;
-
+    int sprite_height = 0;
+    int sprite_width = 0;
 };
 
 class SpriteAnimator {
-private:
     SDL_Surface* mSurface;
     SDL_Texture* mTexture;
     SDL_Renderer* mRenderer;
-    SDL_FRect mSrcRect;
-    SDL_FRect mDestRect;
     int frameCount =0 ;
     int spriteHeight;
     int spriteWidth;
@@ -27,15 +26,15 @@ private:
     int numCols;
     int xIncrement;
     int yIncrement;
-    int frameTimeMs = 100;
+    int frameTimeMs = 500;
     float currentTime = 0;
 
 public:
+    SDL_FRect mSrcRect;
+    SDL_FRect mDestRect;
     // Constructor declaration
     SpriteAnimator(
         SDL_Renderer& renderer,
-        SDL_FRect src_rect,
-        SDL_FRect dest_rect,
         SpriteInformation sprite_information
         );
 
@@ -45,6 +44,8 @@ public:
     void UpdateFrame();
     void Render() const;
     void Reset();
+
+    void ResetTransform(Transform transform);
 };
 
 #endif

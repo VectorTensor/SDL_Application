@@ -46,6 +46,12 @@ void SDLApplication::Input() {
             // for (auto& s: sprite_animators) {
             //     s.UpdateFrame();
             // }
+            if (game_objects[0]->current == 1) {
+                game_objects[0]->SwitchState("fight");
+            }
+            else if (game_objects[0]->current == 0) {
+                game_objects[0]->SwitchState("jump");
+            }
         }
     }
 }
@@ -69,19 +75,6 @@ void SDLApplication::Render() {
 void SDLApplication::MainLoop()
 {
 
-    SpriteInformation sprite = {
-        "assets/warrior-packs/Fighter/Idle.png",
-         128,
-         512,
-         1,
-         6,
-    };
-    SpriteAnimator sprite_animator(*mRenderer,
-        {0,0,128,128},
-        {0,0,128,128},
-        sprite
-        );
-    push_sprite_animator(sprite_animator);
     Uint64 lastTime = 0;
     Uint64 fps= 0;
     TestGameObject test_game_object(*mRenderer);

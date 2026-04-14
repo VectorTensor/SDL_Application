@@ -4,30 +4,41 @@
 #include "utils/SpriteAnimator/spriteAnimator.h"
 #include <vector>
 
+#include "utils/common/common.h"
 
 
 struct State {
-    char* name;
+    const char* name;
     SpriteAnimator sprite_animator;
 };
 
 class GameObject {
 protected:
     std::vector<State> states;
-    State* current_state;
     SDL_Renderer* mRenderer;
+    Transform transform;
 
 public:
+    int current = 0;
     void AddState(State &state);
     void SwitchState(const char* state_name);
     void Render() const;
     GameObject(SDL_Renderer &renderer);
     virtual void Initialize() = 0;
     void Update();
+    void SetTransform(float x, float y, float w, float h);
+
 
 
 
 };
+
+State CreateNewState(
+    SpriteInformation sprite,
+    const char* name,
+    SDL_Renderer& renderer,
+    Transform &transform
+    );
 
 
 

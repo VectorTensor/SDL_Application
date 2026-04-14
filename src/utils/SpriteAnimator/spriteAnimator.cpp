@@ -8,8 +8,6 @@
 
 SpriteAnimator::SpriteAnimator(
     SDL_Renderer &renderer,
-    SDL_FRect src_rect,
-    SDL_FRect dest_rect,
     SpriteInformation sprite_information
     )
 {
@@ -17,17 +15,19 @@ SpriteAnimator::SpriteAnimator(
     mSurface = SDL_LoadPNG(sprite_information.sprite_path);
     if (mSurface == nullptr) {
         SDL_Log("Failed to load image: %s", SDL_GetError());
+    }else {
+        sprite_information.sprite_height = mSurface->h;
+        sprite_information.sprite_width = mSurface->w;
     }
     mTexture = SDL_CreateTextureFromSurface(mRenderer, mSurface);
     frameCount = 0;
-    mSrcRect = src_rect;
-    mDestRect = dest_rect;
     spriteHeight = sprite_information.sprite_height;
     spriteWidth = sprite_information.sprite_width;
     numRows = sprite_information.num_rows;
     numCols = sprite_information.num_cols;
     xIncrement = spriteWidth/numCols;
     yIncrement = spriteHeight/numRows;
+    mSrcRect = {0,0,static_cast<float>(xIncrement),static_cast<float>(yIncrement)};
 }
 
 SpriteAnimator::~SpriteAnimator() = default;
@@ -57,5 +57,13 @@ void SpriteAnimator::Render() const {
 
 void SpriteAnimator::Reset() {
     mSrcRect.x = 0;
+}
+
+void SpriteAnimator::ResetTransform(const Transform transform) {
+    mDestRect.x = transform.x;
+    mDestRect.y = transform.y;
+
+    mDestRect.w = transform.w;
+    mDestRect.h = transform.h;
 }
 

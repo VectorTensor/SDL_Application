@@ -5,28 +5,31 @@
 #include "TestGameObject.h"
 
 void TestGameObject::Initialize() {
-    SpriteInformation sprite = {
-        "assets/warrior-packs/Fighter/Attack_1.png",
-        128,
-        512,
-        1,
-        4
-    };
-    SpriteAnimator sprite_animator(*mRenderer,
-        {0,0,128,128},
-        {0,0,128,128},
-        sprite
+    transform.x = 0;
+    transform.y = 0;
+    transform.w = 128,
+    transform.h = 128;
+    auto fight_state = CreateNewState(
+        {"assets/warrior-packs/Fighter/Attack_1.png",
+            1,
+            4 },
+        "fight",
+        *mRenderer,
+        transform
         );
+    AddState(fight_state);
 
+    auto jump_state= CreateNewState(
+        {"assets/warrior-packs/Fighter/Jump.png",
+            1,
+            10 },
+        "jump",
+        *mRenderer,
+        transform
+        );
+    AddState(jump_state);
 
-    State idle_state = {
-        "idle",
-        sprite_animator
-    };
-
-    AddState(idle_state);
-    current_state = &states[0];
-
+    current = 1;
 
 
 }
