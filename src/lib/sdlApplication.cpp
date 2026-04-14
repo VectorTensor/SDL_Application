@@ -46,11 +46,14 @@ void SDLApplication::Input() {
             // for (auto& s: sprite_animators) {
             //     s.UpdateFrame();
             // }
-            if (game_objects[0]->current == 1) {
+            if (event.key.key == SDLK_RETURN) {
                 game_objects[0]->SwitchState("fight");
             }
-            else if (game_objects[0]->current == 0) {
+            else if (event.key.key == SDLK_SPACE) {
                 game_objects[0]->SwitchState("jump");
+            }
+            else if (event.key.key == SDLK_W) {
+                game_objects[0]->SwitchState("walk");
             }
         }
     }

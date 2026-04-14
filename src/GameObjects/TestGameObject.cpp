@@ -28,8 +28,17 @@ void TestGameObject::Initialize() {
         transform
         );
     AddState(jump_state);
+    auto walk_state= CreateNewState(
+        {"assets/warrior-packs/Fighter/Walk.png",
+            1,
+            8 },
+        "walk",
+        *mRenderer,
+        transform
+        );
+    AddState(walk_state);
 
-    current = 1;
+    current = 2;
 
 
 }

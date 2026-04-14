@@ -26,7 +26,7 @@ class SpriteAnimator {
     int numCols;
     int xIncrement;
     int yIncrement;
-    int frameTimeMs = 500;
+    int frameTimeMs = 200;
     float currentTime = 0;
 
 public:
