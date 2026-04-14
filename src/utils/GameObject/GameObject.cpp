@@ -12,6 +12,7 @@ void GameObject::SwitchState(const char* state_name) {
         if (strcmp(s.name, state_name) == 0) {
             current = count;
             states[current].sprite_animator.Reset();
+            states[current].sprite_animator.ResetTransform(transform);
         }
         count++;
     }
@@ -27,23 +28,37 @@ void GameObject::Update() {
     states[current].sprite_animator.UpdateFrame();
 }
 
+void GameObject::SetTransform(float x, float y, float w, float h) {
+    transform.x = x;
+    transform.y = y;
+    transform.w = w;
+    transform.h = h;
+
+    states[current].sprite_animator.mDestRect.x = x;
+
+    states[current].sprite_animator.mDestRect.y = y;
+
+    states[current].sprite_animator.mDestRect.w = w;
+    states[current].sprite_animator.mDestRect.h = h;
+
+}
+
 void GameObject::Render() const {
     states[current].sprite_animator.Render();
 }
 
 State CreateNewState(
     SpriteInformation sprite,
-    SDL_FRect src_rect,
-    SDL_FRect dest_rect,
     const char* name,
-    SDL_Renderer& renderer
+    SDL_Renderer& renderer,
+    Transform &transform
     ) {
 
-    SpriteAnimator sprite_animator(renderer,
-        src_rect,
-        dest_rect,
-        sprite
-        );
+    SpriteAnimator sprite_animator(renderer, sprite);
+    sprite_animator.mDestRect.x = transform.x;
+    sprite_animator.mDestRect.y = transform.y;
+    sprite_animator.mDestRect.w = transform.w;
+    sprite_animator.mDestRect.h = transform.h;
 
     State state = {
         name,

@@ -4,6 +4,7 @@
 #include "utils/SpriteAnimator/spriteAnimator.h"
 #include <vector>
 
+#include "utils/common/common.h"
 
 
 struct State {
@@ -15,6 +16,7 @@ class GameObject {
 protected:
     std::vector<State> states;
     SDL_Renderer* mRenderer;
+    Transform transform;
 
 public:
     int current = 0;
@@ -24,6 +26,8 @@ public:
     GameObject(SDL_Renderer &renderer);
     virtual void Initialize() = 0;
     void Update();
+    void SetTransform(float x, float y, float w, float h);
+
 
 
 
@@ -31,10 +35,9 @@ public:
 
 State CreateNewState(
     SpriteInformation sprite,
-    SDL_FRect scr_rect,
-    SDL_FRect dest_rect,
     const char* name,
-    SDL_Renderer& renderer
+    SDL_Renderer& renderer,
+    Transform &transform
     );
 
 

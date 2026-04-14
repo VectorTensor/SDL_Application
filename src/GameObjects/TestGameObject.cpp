@@ -5,29 +5,27 @@
 #include "TestGameObject.h"
 
 void TestGameObject::Initialize() {
+    transform.x = 0;
+    transform.y = 0;
+    transform.w = 128,
+    transform.h = 128;
     auto fight_state = CreateNewState(
         {"assets/warrior-packs/Fighter/Attack_1.png",
-            128,
-            512,
             1,
             4 },
-        {0,0,128,128},
-        {0,0,128,128},
         "fight",
-        *mRenderer
+        *mRenderer,
+        transform
         );
     AddState(fight_state);
 
     auto jump_state= CreateNewState(
         {"assets/warrior-packs/Fighter/Jump.png",
-            128,
-            1280,
             1,
             10 },
-        {0,0,128,128},
-        {0,0,128,128},
         "jump",
-        *mRenderer
+        *mRenderer,
+        transform
         );
     AddState(jump_state);
 
