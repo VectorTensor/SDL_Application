@@ -42,3 +42,17 @@ void TestGameObject::Initialize() {
 
 
 }
+
+void TestGameObject::HandleInput(SDL_Event &event) {
+
+    if (event.key.key == SDLK_RETURN) {
+        SwitchState("fight");
+    }
+    if (event.key.key == SDLK_W) {
+        SwitchState("walk");
+    }
+
+    if (event.key.key == SDLK_SPACE) {
+        SwitchState("jump");
+    }
+}

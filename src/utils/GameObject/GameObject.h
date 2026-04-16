@@ -27,6 +27,7 @@ public:
     virtual void Initialize() = 0;
     void Update();
     void SetTransform(float x, float y, float w, float h);
+    virtual void HandleInput(SDL_Event &event) = 0;
 
 
 

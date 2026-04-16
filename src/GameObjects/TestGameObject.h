@@ -12,6 +12,7 @@ class TestGameObject: public GameObject {
 public:
     void Initialize() override;
     TestGameObject(SDL_Renderer &renderer):GameObject(renderer){};
+    void HandleInput(SDL_Event &event) override;
 
 };
 
