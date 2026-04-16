@@ -15,6 +15,8 @@ class SDLApplication
     bool mRunning = true;
     std::vector<SpriteAnimator> sprite_animators;
     std::vector<GameObject*> game_objects;
+    int height;
+    int width;
 public:
     SDLApplication();
     void push_sprite_animator(const SpriteAnimator& sprite_animator);

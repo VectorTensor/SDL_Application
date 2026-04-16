@@ -28,6 +28,7 @@ void GameObject::Update() {
     states[current].sprite_animator.UpdateFrame();
 }
 
+
 void GameObject::SetTransform(float x, float y, float w, float h) {
     transform.x = x;
     transform.y = y;

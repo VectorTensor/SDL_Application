@@ -11,8 +11,10 @@
 SDLApplication::SDLApplication() {
 
     SDL_Init(SDL_INIT_VIDEO);
+    height = 400;
+    width = 600;
 
-    SDL_CreateWindowAndRenderer("Test Window", 600, 400, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
+    SDL_CreateWindowAndRenderer("Test Window",width , height, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
 
 
 }
@@ -55,6 +57,11 @@ void SDLApplication::Input() {
             else if (event.key.key == SDLK_W) {
                 game_objects[0]->SwitchState("walk");
             }
+        }
+
+        if (event.type == SDL_EVENT_WINDOW_RESIZED) {
+            width = event.window.data1;
+            height = event.window.data2;
         }
     }
 }
