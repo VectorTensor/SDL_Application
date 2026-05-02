@@ -1,8 +1,8 @@
 #include "sdlApplication.h"
 
-#include <format>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_timer.h>
+#include <format>
 
 #include "GameObjects/TestGameObject.h"
 #include "utils/GameObject/GameObject.h"
@@ -38,18 +38,6 @@ void SDLApplication::Input() {
             mRunning = false;
         }
         if (event.type == SDL_EVENT_KEY_DOWN) {
-            // for (auto& s: sprite_animators) {
-            //     s.UpdateFrame();
-            // }
-            // if (event.key.key == SDLK_RETURN) {
-            //     game_objects[0]->SwitchState("fight");
-            // }
-            // else if (event.key.key == SDLK_SPACE) {
-            //     game_objects[0]->SwitchState("jump");
-            // }
-            // else if (event.key.key == SDLK_W) {
-            //     game_objects[0]->SwitchState("walk");
-            // }
             for (auto &g: game_objects) {
                 g->HandleInput(event);
             }
@@ -82,7 +70,7 @@ void SDLApplication::Render() {
 void SDLApplication::MainLoop() {
     Uint64 lastTime = 0;
     Uint64 fps = 0;
-    TestGameObject* test_game_object = new TestGameObject(*mRenderer);
+    TestGameObject *test_game_object = new TestGameObject(*mRenderer);
     test_game_object->Initialize();
     game_objects.push_back(test_game_object);
 

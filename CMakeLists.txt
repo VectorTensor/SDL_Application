@@ -4,6 +4,7 @@ project(spriteAnimation)
 set(CMAKE_CXX_STANDARD 20)
 
 find_package(SDL3 CONFIG REQUIRED)
+find_package(SDL3_ttf REQUIRED)
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
 add_executable(spriteAnimation src/main.cpp
         src/utils/SpriteAnimator/spriteAnimator.cpp
@@ -14,11 +15,13 @@ add_executable(spriteAnimation src/main.cpp
         src/GameObjects/TestGameObject.cpp
         src/GameObjects/TestGameObject.h
         src/utils/common/common.h
+        src/ui/textBox.h
+        src/ui/textBox.cpp
 )
 
 target_include_directories(spriteAnimation PRIVATE src)
 
-target_link_libraries(spriteAnimation PRIVATE SDL3::SDL3)
+target_link_libraries(spriteAnimation PRIVATE SDL3::SDL3 SDL3_ttf::SDL3_ttf)
 
 # On Windows, copy SDL3.dll to the build directory
 if(WIN32)

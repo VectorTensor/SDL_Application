@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+
+version: '3'
+
+vars:
+  GREETING: Hello, world!
+  PROGRAM: spriteAnimation # name of the project
+
+tasks:
+  generate:
+    desc: building cmake_commands_json
+    cmds:
+      - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -B build
+    silent: true
+  build:
+    desc: build the binary
+    cmds:
+      - cmake --build build
+  run:
+    desc: run the program
+    cmds:
+      - ./build/{{.PROGRAM}}
