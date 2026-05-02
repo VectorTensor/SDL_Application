@@ -1,6 +1,7 @@
 
 
 #include "textBox.h"
+#include "SDL3_ttf/SDL_ttf.h"
 
 bool TextBox::init(SDL_Renderer *renderer, const std::string &bodyFontPath, const std::string &nameFontPath,
                    float bodySize, float nameSize) {
@@ -143,4 +144,23 @@ void TextBox::hide() {
 
 void TextBox::show() {
     visible = true;
+}
+
+void TextBox::rebuildTextTexture(SDL_Renderer *renderer) {
+    if (textTex) {
+        SDL_DestroyTexture(textTex);
+        textTex = nullptr;
+    }
+
+    if (visibleText.empty()) {
+        textDirty = false;
+        return;
+    }
+
+    SDL_Color col = isNarrator ? COL_NARRATOR : COL_BODY_TEXT;
+
+    int wrapWidth = static_cast<int>(textRect.w);
+
+    int size_of_text = visibleText.length();
+    SDL_Surface *surf = TTF_RenderText_Blended_Wrapped(bodyFont, visibleText.c_str(), size_of_text, col, wrapWidth);
 }
