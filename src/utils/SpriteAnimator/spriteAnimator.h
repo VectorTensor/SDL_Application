@@ -1,13 +1,12 @@
 #ifndef SPRITE_ANIMATOR_H
 #define SPRITE_ANIMATOR_H
 
-#include <string>
 #include <SDL3/SDL_render.h>
 
 #include "utils/common/common.h"
 
 
-struct SpriteInformation{
+struct SpriteInformation {
     char* sprite_path;
     int num_rows;
     int num_cols;
@@ -19,7 +18,7 @@ class SpriteAnimator {
     SDL_Surface* mSurface;
     SDL_Texture* mTexture;
     SDL_Renderer* mRenderer;
-    int frameCount =0 ;
+    int frameCount = 0;
     int spriteHeight;
     int spriteWidth;
     int numRows;
@@ -33,10 +32,7 @@ public:
     SDL_FRect mSrcRect;
     SDL_FRect mDestRect;
     // Constructor declaration
-    SpriteAnimator(
-        SDL_Renderer& renderer,
-        SpriteInformation sprite_information
-        );
+    SpriteAnimator(SDL_Renderer& renderer, SpriteInformation sprite_information);
 
     // Destructor (important for cleanup)
     ~SpriteAnimator();

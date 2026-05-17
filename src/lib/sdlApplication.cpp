@@ -57,13 +57,19 @@ void SDLApplication::Update() {
 }
 
 void SDLApplication::Render() {
+    SDL_SetRenderDrawColor(mRenderer, 30, 30, 30, 255); // dark gray background
     SDL_RenderClear(mRenderer);
     // for (auto& s: sprite_animators) {
     //     s.Render();
     // }
-    for (auto &g: game_objects) {
-        g->Render();
-    }
+    // for (auto &g: game_objects) {
+    //     g->Render();
+    // }
+    // RenderBox(mRenderer, &this->test);
+    // Step 2: NOW set green and draw the rect
+    SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, 255);
+    SDL_FRect outline = {0.0f, 0.0f, 380.0f, 220.0f};
+    SDL_RenderRect(mRenderer, &outline);
     SDL_RenderPresent(mRenderer);
 }
 
@@ -73,6 +79,10 @@ void SDLApplication::MainLoop() {
     TestGameObject *test_game_object = new TestGameObject(*mRenderer);
     test_game_object->Initialize();
     game_objects.push_back(test_game_object);
+
+    SDL_FRect box = {130.0f, 130.0f, 380.0f, 220.0f};
+
+    this->test.box = box;
 
 
     while (mRunning) {

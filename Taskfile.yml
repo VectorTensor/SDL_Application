@@ -10,13 +10,18 @@ tasks:
   generate:
     desc: building cmake_commands_json
     cmds:
+      - echo creating the building cmake_commands_json build files.............
       - cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -B build
     silent: true
   build:
     desc: build the binary
     cmds:
+      - echo building the binary..............
       - cmake --build build
+    silent: true
   run:
     desc: run the program
     cmds:
+      - echo running the program............
       - ./build/{{.PROGRAM}}
+    silent: true
