@@ -67,9 +67,7 @@ void SDLApplication::Render() {
     // }
     // RenderBox(mRenderer, &this->test);
     // Step 2: NOW set green and draw the rect
-    SDL_SetRenderDrawColor(mRenderer, 0, 255, 0, 255);
-    SDL_FRect outline = {0.0f, 0.0f, 380.0f, 220.0f};
-    SDL_RenderRect(mRenderer, &outline);
+    RenderBox(mRenderer, &this->test);
     SDL_RenderPresent(mRenderer);
 }
 

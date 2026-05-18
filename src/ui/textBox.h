@@ -12,3 +12,5 @@ typedef struct {
 
 
 void RenderBox(SDL_Renderer *ren, const VnDialogueBox *d);
+
+void Vn_RenderRoundedRect(float radius, float height, float width, float x, float y, SDL_Renderer *ren);
