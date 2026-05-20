@@ -7,15 +7,43 @@
 void RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
     SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
     SDL_FRect outline = {0.0f, 0.0f, 380.0f, 220.0f};
-    Vn_RenderRoundedRect(10.0, 200, 500, 10, 10, ren);
+
+    SDL_FRect rect = {10, 10, 500, 200};
+    DrawRoundedRectThick(ren, rect, 4, 4);
+
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
 }
 
-void Vn_RenderRoundedRect(float radius, float height, float width, float x, float y, SDL_Renderer *ren) {
-    auto h = height;
-    auto w = width;
+void RenderGeometryTest(SDL_Renderer *ren) {
+    SDL_Vertex verts[3] = {
+            {{100, 50}, {255, 0, 0, 255}, {0, 0}}, // top, red
+            {{100, 150}, {0, 255, 0, 255}, {0, 0}}, // bottom-left, green
+            {{150, 150}, {0, 0, 0, 255}, {0, 0}}, // bottom-right, blue
+    };
+    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+    SDL_RenderPoint(ren, 100, 50);
+    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
+    SDL_RenderPoint(ren, 100, 150);
+    SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
+    SDL_RenderPoint(ren, 150, 150);
+
+    SDL_RenderGeometry(ren, NULL, verts, 3, NULL, 0);
+}
+
+void DrawRoundedRectThick(SDL_Renderer *renderer, SDL_FRect rect, float radius, int thickness) {
+    for (int i = 0; i < thickness; i++) {
+        SDL_FRect r = {rect.x + i, rect.y + i, rect.w - i * 2, rect.h - i * 2};
+        Vn_RenderRoundedRect(r, radius - i, renderer);
+    }
+}
+
+void Vn_RenderRoundedRect(SDL_FRect rect, float radius, SDL_Renderer *ren) {
+    auto h = rect.h;
+    auto w = rect.w;
     auto r = radius;
     r = fminf(h / 2, fminf(r, w / 2));
+    float x = rect.x;
+    float y = rect.y;
 
     // Draw lines top bottom left right
     SDL_RenderLine(ren, x + r, y, x + w - r, y);
