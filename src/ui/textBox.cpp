@@ -9,7 +9,7 @@ void RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
     SDL_FRect outline = {0.0f, 0.0f, 380.0f, 220.0f};
 
     SDL_FRect rect = {10, 10, 500, 200};
-    DrawRoundedRectThick(ren, rect, 4, 4);
+    DrawRoundedRectThick(ren, rect, 10, 4);
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
 }
@@ -26,8 +26,6 @@ void RenderGeometryTest(SDL_Renderer *ren) {
     SDL_RenderPoint(ren, 100, 150);
     SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
     SDL_RenderPoint(ren, 150, 150);
-
-    SDL_RenderGeometry(ren, NULL, verts, 3, NULL, 0);
 }
 
 void DrawRoundedRectThick(SDL_Renderer *renderer, SDL_FRect rect, float radius, int thickness) {
