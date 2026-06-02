@@ -4,34 +4,29 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-void RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
+void Vn_RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
     SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-    SDL_FRect outline = {0.0f, 0.0f, 380.0f, 220.0f};
+    float y_box = (float) d->height * 0.7;
+    float h_box = (float) d->height * 0.3;
+    SDL_FRect box = {0, y_box, (float) d->width, h_box};
+    float y_name = (float) d->height * 0.65;
+    float h_name = (float) d->height * 0.05;
+    float w_name = (float) d->width * 0.15;
+    SDL_FRect nametag = {0.0f, y_name, w_name, h_name};
+    DialogueUIAttr dAttr_big = {box, 10, 4};
+    DialogueUIAttr dAttr_small = {nametag, 10, 4};
 
-    SDL_FRect rect = {10, 10, 500, 200};
-    DrawRoundedRectThick(ren, rect, 10, 4);
+    Vn_DrawRoundedRectThick(ren, dAttr_big);
+    Vn_DrawRoundedRectThick(ren, dAttr_small);
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
 }
 
-void RenderGeometryTest(SDL_Renderer *ren) {
-    SDL_Vertex verts[3] = {
-            {{100, 50}, {255, 0, 0, 255}, {0, 0}}, // top, red
-            {{100, 150}, {0, 255, 0, 255}, {0, 0}}, // bottom-left, green
-            {{150, 150}, {0, 0, 0, 255}, {0, 0}}, // bottom-right, blue
-    };
-    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
-    SDL_RenderPoint(ren, 100, 50);
-    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-    SDL_RenderPoint(ren, 100, 150);
-    SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
-    SDL_RenderPoint(ren, 150, 150);
-}
 
-void DrawRoundedRectThick(SDL_Renderer *renderer, SDL_FRect rect, float radius, int thickness) {
-    for (int i = 0; i < thickness; i++) {
-        SDL_FRect r = {rect.x + i, rect.y + i, rect.w - i * 2, rect.h - i * 2};
-        Vn_RenderRoundedRect(r, radius - i, renderer);
+void Vn_DrawRoundedRectThick(SDL_Renderer *ren, DialogueUIAttr diagAttr) {
+    for (int i = 0; i < diagAttr.thickness; i++) {
+        SDL_FRect r = {diagAttr.rect.x + i, diagAttr.rect.y + i, diagAttr.rect.w - i * 2, diagAttr.rect.h - i * 2};
+        Vn_RenderRoundedRect(r, diagAttr.radius - i, ren);
     }
 }
 
@@ -72,4 +67,17 @@ void Vn_RenderRoundedRect(SDL_FRect rect, float radius, SDL_Renderer *ren) {
         // bottom right
         SDL_RenderPoint(ren, cbr_x + dx, cbr_y + dy);
     }
+}
+void RenderGeometryTest(SDL_Renderer *ren) {
+    SDL_Vertex verts[3] = {
+            {{100, 50}, {255, 0, 0, 255}, {0, 0}}, // top, red
+            {{100, 150}, {0, 255, 0, 255}, {0, 0}}, // bottom-left, green
+            {{150, 150}, {0, 0, 0, 255}, {0, 0}}, // bottom-right, blue
+    };
+    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+    SDL_RenderPoint(ren, 100, 50);
+    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
+    SDL_RenderPoint(ren, 100, 150);
+    SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
+    SDL_RenderPoint(ren, 150, 150);
 }

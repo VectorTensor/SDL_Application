@@ -1,6 +1,7 @@
 #include "sdlApplication.h"
 
 #include <SDL3/SDL_init.h>
+#include <SDL3/SDL_log.h>
 #include <SDL3/SDL_timer.h>
 #include <format>
 
@@ -15,7 +16,7 @@ SDLApplication::SDLApplication() {
     SDL_CreateWindowAndRenderer("Test Window", width, height, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
 }
 
-void SDLApplication::push_sprite_animator(const SpriteAnimator &sprite_animator) {
+void SDLApplication::push_sprite_animator(const SpriteAnimator& sprite_animator) {
     sprite_animators.push_back(sprite_animator);
 }
 
@@ -38,7 +39,7 @@ void SDLApplication::Input() {
             mRunning = false;
         }
         if (event.type == SDL_EVENT_KEY_DOWN) {
-            for (auto &g: game_objects) {
+            for (auto& g: game_objects) {
                 g->HandleInput(event);
             }
         }
@@ -51,7 +52,9 @@ void SDLApplication::Input() {
 }
 
 void SDLApplication::Update() {
-    for (auto &g: game_objects) {
+    this->test.height = height;
+    this->test.width = width;
+    for (auto& g: game_objects) {
         g->Update();
     }
 }
@@ -67,20 +70,16 @@ void SDLApplication::Render() {
     // }
     // RenderBox(mRenderer, &this->test);
     // Step 2: NOW set green and draw the rect
-    RenderBox(mRenderer, &this->test);
+    Vn_RenderBox(mRenderer, &this->test);
     SDL_RenderPresent(mRenderer);
 }
 
 void SDLApplication::MainLoop() {
     Uint64 lastTime = 0;
     Uint64 fps = 0;
-    TestGameObject *test_game_object = new TestGameObject(*mRenderer);
+    TestGameObject* test_game_object = new TestGameObject(*mRenderer);
     test_game_object->Initialize();
     game_objects.push_back(test_game_object);
-
-    SDL_FRect box = {130.0f, 130.0f, 380.0f, 220.0f};
-
-    this->test.box = box;
 
 
     while (mRunning) {

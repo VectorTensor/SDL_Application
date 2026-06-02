@@ -5,15 +5,20 @@
 
 
 typedef struct {
-    SDL_FRect box;
-    SDL_FRect nametag;
+    SDL_FRect rect;
+    float radius;
+    int thickness;
+} DialogueUIAttr;
+
+typedef struct {
+    int height;
+    int width;
 
 } VnDialogueBox;
 
+void Vn_RenderBox(SDL_Renderer *ren, const VnDialogueBox *d);
 
-void RenderBox(SDL_Renderer *ren, const VnDialogueBox *d);
-
-void DrawRoundedRectThick(SDL_Renderer *renderer, SDL_FRect rect, float radius, int thickness);
+void Vn_DrawRoundedRectThick(SDL_Renderer *renderer, DialogueUIAttr diagAttr);
 void Vn_RenderRoundedRect(SDL_FRect rect, float radius, SDL_Renderer *ren);
 
 void RenderGeometryTest(SDL_Renderer *ren);
