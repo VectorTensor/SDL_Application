@@ -3,9 +3,11 @@
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_timer.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include <format>
 
 #include "GameObjects/TestGameObject.h"
+#include "ui/textBox.h"
 #include "utils/GameObject/GameObject.h"
 
 SDLApplication::SDLApplication() {
@@ -62,15 +64,11 @@ void SDLApplication::Update() {
 void SDLApplication::Render() {
     SDL_SetRenderDrawColor(mRenderer, 30, 30, 30, 255); // dark gray background
     SDL_RenderClear(mRenderer);
-    // for (auto& s: sprite_animators) {
-    //     s.Render();
-    // }
-    // for (auto &g: game_objects) {
-    //     g->Render();
-    // }
-    // RenderBox(mRenderer, &this->test);
-    // Step 2: NOW set green and draw the rect
     Vn_RenderBox(mRenderer, &this->test);
+    for (auto& g: game_objects) {
+        g->Render();
+    }
+    // Step 2: NOW set green and draw the rect
     SDL_RenderPresent(mRenderer);
 }
 
@@ -80,7 +78,9 @@ void SDLApplication::MainLoop() {
     TestGameObject* test_game_object = new TestGameObject(*mRenderer);
     test_game_object->Initialize();
     game_objects.push_back(test_game_object);
-
+    TTF_Init();
+    const char* textShow = "Hello world sdl";
+    SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
 
     while (mRunning) {
         Uint64 currentTick = SDL_GetTicks();

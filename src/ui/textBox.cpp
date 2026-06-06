@@ -2,6 +2,7 @@
 #include "textBox.h"
 #include <SDL3_ttf/SDL_ttf.h>
 #include <math.h>
+#include <string.h>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
@@ -21,14 +22,28 @@ void Vn_RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
     Vn_DrawRoundedRectThick(ren, dAttr_small);
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+
+    insertText(d, ren);
+}
+void SetText(VnDialogueBox *d_box, const char *text, int size, SDL_Renderer *ren) {
+    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", 32);
+    if (font == NULL) {
+        auto error = SDL_GetError();
+        SDL_Log("Font not found %s", error);
+    }
+    SDL_Color white = {255, 255, 255, 255};
+    SDL_Surface *surf = TTF_RenderText_Blended(font, text, size, white);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
+    d_box->textTexture = tex;
 }
 
-
-void insertText(char *text, SDL_Renderer *ren) {
-    TTF_Font *font = TTF_OpenFont("monofur.ttf", 32);
-    SDL_Color white = {255, 255, 255, 255};
-    SDL_Surface *surf = TTF_RenderText_Blended(font, "Hello from sdl", 25, white);
-    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
+void insertText(const VnDialogueBox *d_box, SDL_Renderer *ren) {
+    auto tex = d_box->textTexture;
+    float w, h;
+    SDL_GetTextureSize(tex, &w, &h);
+    SDL_FRect dst = {50, 50, w, h};
+    SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
+    SDL_RenderTexture(ren, tex, NULL, &dst);
 }
 
 
