@@ -1,5 +1,6 @@
 
 #include "textBox.h"
+#include <SDL3_ttf/SDL_ttf.h>
 #include <math.h>
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -20,6 +21,14 @@ void Vn_RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
     Vn_DrawRoundedRectThick(ren, dAttr_small);
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+}
+
+
+void insertText(char *text, SDL_Renderer *ren) {
+    TTF_Font *font = TTF_OpenFont("monofur.ttf", 32);
+    SDL_Color white = {255, 255, 255, 255};
+    SDL_Surface *surf = TTF_RenderText_Blended(font, "Hello from sdl", 25, white);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
 }
 
 
