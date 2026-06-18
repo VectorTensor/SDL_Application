@@ -17,6 +17,7 @@ add_executable(spriteAnimation src/main.cpp
         src/utils/common/common.h
         src/ui/textBox.h
         src/ui/textBox.cpp
+        src/common/RenderData.h
 )
 
 target_include_directories(spriteAnimation PRIVATE src)

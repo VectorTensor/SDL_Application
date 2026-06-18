@@ -17,7 +17,7 @@ class SDLApplication {
     std::vector<GameObject *> game_objects;
     int height;
     int width;
-    VnDialogueBox test;
+    TextBox textBox;
 
 public:
     SDLApplication();

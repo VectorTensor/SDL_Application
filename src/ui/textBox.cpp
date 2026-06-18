@@ -6,26 +6,7 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-void Vn_RenderBox(SDL_Renderer *ren, const VnDialogueBox *d) {
-    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-    float y_box = (float) d->height * 0.7;
-    float h_box = (float) d->height * 0.3;
-    SDL_FRect box = {0, y_box, (float) d->width, h_box};
-    float y_name = (float) d->height * 0.65;
-    float h_name = (float) d->height * 0.05;
-    float w_name = (float) d->width * 0.15;
-    SDL_FRect nametag = {0.0f, y_name, w_name, h_name};
-    DialogueUIAttr dAttr_big = {box, 10, 4};
-    DialogueUIAttr dAttr_small = {nametag, 10, 4};
-
-    Vn_DrawRoundedRectThick(ren, dAttr_big);
-    Vn_DrawRoundedRectThick(ren, dAttr_small);
-
-    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
-
-    insertText(d, ren);
-}
-void SetText(VnDialogueBox *d_box, const char *text, int size, SDL_Renderer *ren) {
+void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren) {
     TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", 32);
     if (font == NULL) {
         auto error = SDL_GetError();
@@ -34,27 +15,22 @@ void SetText(VnDialogueBox *d_box, const char *text, int size, SDL_Renderer *ren
     SDL_Color white = {255, 255, 255, 255};
     SDL_Surface *surf = TTF_RenderText_Blended(font, text, size, white);
     SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
-    d_box->textTexture = tex;
-}
-
-void insertText(const VnDialogueBox *d_box, SDL_Renderer *ren) {
-    auto tex = d_box->textTexture;
     float w, h;
     SDL_GetTextureSize(tex, &w, &h);
     SDL_FRect dst = {50, 50, w, h};
     SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
-    SDL_RenderTexture(ren, tex, NULL, &dst);
+    SDL_RenderTexture(ren, tex, nullptr, &dst);
 }
 
 
-void Vn_DrawRoundedRectThick(SDL_Renderer *ren, DialogueUIAttr diagAttr) {
-    for (int i = 0; i < diagAttr.thickness; i++) {
-        SDL_FRect r = {diagAttr.rect.x + i, diagAttr.rect.y + i, diagAttr.rect.w - i * 2, diagAttr.rect.h - i * 2};
-        Vn_RenderRoundedRect(r, diagAttr.radius - i, ren);
+void DrawRoundedRectangleThick(SDL_Renderer *ren, const DialogueUIAttr *diagAttr) {
+    for (int i = 0; i < diagAttr->thickness; i++) {
+        SDL_FRect r = {diagAttr->rect.x + i, diagAttr->rect.y + i, diagAttr->rect.w - i * 2, diagAttr->rect.h - i * 2};
+        renderRoundedRectangle(r, diagAttr->radius - i, ren);
     }
 }
 
-void Vn_RenderRoundedRect(SDL_FRect rect, float radius, SDL_Renderer *ren) {
+void renderRoundedRectangle(SDL_FRect rect, float radius, SDL_Renderer *ren) {
     auto h = rect.h;
     auto w = rect.w;
     auto r = radius;
@@ -104,4 +80,25 @@ void RenderGeometryTest(SDL_Renderer *ren) {
     SDL_RenderPoint(ren, 100, 150);
     SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
     SDL_RenderPoint(ren, 150, 150);
+}
+
+void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w) {
+    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
+    float y_box = (float) w->height * 0.7;
+    float h_box = (float) w->height * 0.3;
+    SDL_FRect box = {0, y_box, (float) w->width, h_box};
+    float y_name = (float) w->height * 0.65;
+    float h_name = (float) w->height * 0.05;
+    float w_name = (float) w->width * 0.15;
+    SDL_FRect nametag = {0.0f, y_name, w_name, h_name};
+    b->boxProps = {box, 10, 4};
+    b->nameProps = {nametag, 10, 4};
+
+    DrawRoundedRectangleThick(ren, &b->boxProps);
+    DrawRoundedRectangleThick(ren, &b->nameProps);
+
+    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
+    auto text_sample = "This is a simple text";
+
+    SetText(b, "Hello this test! ", strlen(text_sample), ren);
 }

@@ -54,8 +54,6 @@ void SDLApplication::Input() {
 }
 
 void SDLApplication::Update() {
-    this->test.height = height;
-    this->test.width = width;
     for (auto& g: game_objects) {
         g->Update();
     }
@@ -64,7 +62,9 @@ void SDLApplication::Update() {
 void SDLApplication::Render() {
     SDL_SetRenderDrawColor(mRenderer, 30, 30, 30, 255); // dark gray background
     SDL_RenderClear(mRenderer);
-    Vn_RenderBox(mRenderer, &this->test);
+    // Vn_RenderBox(mRenderer, &this->test);
+    WorldData world = {width, height};
+    RenderTextBox(&textBox, mRenderer, &world);
     for (auto& g: game_objects) {
         g->Render();
     }
@@ -79,8 +79,8 @@ void SDLApplication::MainLoop() {
     test_game_object->Initialize();
     game_objects.push_back(test_game_object);
     TTF_Init();
-    const char* textShow = "Hello world sdl";
-    SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
+    // SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
+
 
     while (mRunning) {
         Uint64 currentTick = SDL_GetTicks();
