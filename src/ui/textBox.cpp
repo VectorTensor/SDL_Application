@@ -12,12 +12,41 @@ void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren) {
         auto error = SDL_GetError();
         SDL_Log("Font not found %s", error);
     }
+    int tw, th;
+    TTF_GetStringSize(font, text, 0, &tw, &th);
+    float x;
+    auto box_rect = t->boxProps.rect;
+    switch (t->ha) {
+        case ALIGN_LEFT:
+            x = box_rect.x;
+            break;
+        case ALIGN_CENTER:
+            x = box_rect.x + (box_rect.w - tw) / 2.0f;
+            break;
+        case ALIGN_RIGHT:
+            x = box_rect.x + box_rect.w - tw;
+            break;
+    }
+
+    float y;
+    switch (t->va) {
+        case ALIGN_TOP:
+            y = box_rect.y;
+            break;
+        case ALIGN_MIDDLE:
+            y = box_rect.y + (box_rect.h - th) / 2.0f;
+            break;
+        case ALIGN_BOTTOM:
+            y = box_rect.y + box_rect.h - th;
+            break;
+    }
+
     SDL_Color white = {255, 255, 255, 255};
     SDL_Surface *surf = TTF_RenderText_Blended(font, text, size, white);
     SDL_Texture *tex = SDL_CreateTextureFromSurface(ren, surf);
     float w, h;
     SDL_GetTextureSize(tex, &w, &h);
-    SDL_FRect dst = {50, 50, w, h};
+    SDL_FRect dst = {x, y, w, h};
     SDL_SetRenderDrawColor(ren, 0, 0, 0, 255);
     SDL_RenderTexture(ren, tex, nullptr, &dst);
 }
@@ -100,5 +129,5 @@ void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w) {
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
     auto text_sample = "This is a simple text";
 
-    SetText(b, "Hello this test! ", strlen(text_sample), ren);
+    SetText(b, b->text.c_str(), strlen(b->text.c_str()), ren);
 }

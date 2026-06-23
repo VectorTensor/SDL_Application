@@ -80,6 +80,9 @@ void SDLApplication::MainLoop() {
     game_objects.push_back(test_game_object);
     TTF_Init();
     // SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
+    textBox.ha = ALIGN_CENTER;
+    textBox.va = ALIGN_MIDDLE;
+    textBox.text = "Hello ";
 
 
     while (mRunning) {
