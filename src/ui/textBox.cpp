@@ -12,10 +12,10 @@ void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const
     float multipleX = world->width / (float) REFERENCE_X;
     float multipleY = world->height / (float) REFERENCE_Y;
     float maxValue = std::max(multipleX, multipleY);
-    int fontSize = 10 * maxValue;
+    int fontSize = 30 * maxValue;
 
 
-    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", 20 * maxValue);
+    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", fontSize);
     if (font == NULL) {
         auto error = SDL_GetError();
         SDL_Log("Font not found %s", error);
