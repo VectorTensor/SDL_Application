@@ -8,7 +8,8 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const WorldData *world) {
+void SetText(const SDL_FRect *boxRect, const char *text, size_t size, SDL_Renderer *ren, const WorldData *world,
+             const VAlign va, const HAlign ha) {
     const float multipleX = static_cast<float>(world->width) / static_cast<float>(REFERENCE_X);
     const float multipleY = static_cast<float>(world->height) / static_cast<float>(REFERENCE_Y);
     const float maxValue = std::max(multipleX, multipleY);
@@ -22,30 +23,30 @@ void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const
     }
     int tw, th;
     TTF_GetStringSize(font, text, 0, &tw, &th);
-    float x;
-    auto box_rect = t->boxProps.rect;
-    switch (t->ha) {
+    float x = 0;
+    auto box_rect = boxRect;
+    switch (ha) {
         case ALIGN_LEFT:
             x = x;
             break;
         case ALIGN_CENTER:
-            x = x + (box_rect.w - static_cast<float>(tw)) / 2.0f;
+            x = x + (box_rect->w - static_cast<float>(tw)) / 2.0f;
             break;
         case ALIGN_RIGHT:
-            x = x + box_rect.w - static_cast<float>(tw);
+            x = x + box_rect->w - static_cast<float>(tw);
             break;
     }
 
     float y;
-    switch (t->va) {
+    switch (va) {
         case ALIGN_TOP:
-            y = box_rect.y;
+            y = box_rect->y;
             break;
         case ALIGN_MIDDLE:
-            y = box_rect.y + (box_rect.h - th) / 2.0f;
+            y = box_rect->y + (box_rect->h - th) / 2.0f;
             break;
         case ALIGN_BOTTOM:
-            y = box_rect.y + box_rect.h - th;
+            y = box_rect->y + box_rect->h - th;
             break;
     }
 
@@ -123,5 +124,6 @@ void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w) {
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
 
-    SetText(b, b->text, strlen(b->text), ren, w);
+    SetText(&b->boxProps.rect, b->text, strlen(b->text), ren, w, b->va, b->ha);
+    SetText(&b->nameProps.rect, b->speaker, strlen(b->speaker), ren, w, b->va, b->ha);
 }

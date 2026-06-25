@@ -37,4 +37,5 @@ typedef struct {
 } TextBox;
 
 void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w);
-void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const WorldData *w);
+void SetText(const SDL_Rect *boxRect, const char *text, size_t size, SDL_Renderer *ren, const WorldData *w, VAlign va,
+             HAlign ha);
