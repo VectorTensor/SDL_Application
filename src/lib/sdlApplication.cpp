@@ -82,7 +82,8 @@ void SDLApplication::MainLoop() {
     // SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
     textBox.ha = ALIGN_CENTER;
     textBox.va = ALIGN_MIDDLE;
-    textBox.text = "Hello ";
+    strcpy(textBox.text, "Hello ");
+    strcpy(textBox.speaker, "Prayash");
 
 
     while (mRunning) {

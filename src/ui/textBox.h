@@ -26,7 +26,7 @@ void RenderGeometryTest(SDL_Renderer *ren);
 
 
 typedef struct {
-    std::string text;
+    char text[2000];
     bool enabled; // controls visibility
     TTF_Font *font;
     char speaker[100];
@@ -37,4 +37,4 @@ typedef struct {
 } TextBox;
 
 void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w);
-void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren);
+void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const WorldData *w);

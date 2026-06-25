@@ -3,11 +3,19 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <math.h>
 #include <string.h>
+
+#include "utils/common/common.h"
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren) {
-    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", 32);
+void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const WorldData *world) {
+    float multipleX = world->width / (float) REFERENCE_X;
+    float multipleY = world->height / (float) REFERENCE_Y;
+    float maxValue = std::max(multipleX, multipleY);
+    int fontSize = 10 * maxValue;
+
+
+    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", 20 * maxValue);
     if (font == NULL) {
         auto error = SDL_GetError();
         SDL_Log("Font not found %s", error);
@@ -120,14 +128,13 @@ void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w) {
     float h_name = (float) w->height * 0.05;
     float w_name = (float) w->width * 0.15;
     SDL_FRect nametag = {0.0f, y_name, w_name, h_name};
-    b->boxProps = {box, 10, 4};
-    b->nameProps = {nametag, 10, 4};
+    b->boxProps = {box, 10, 2};
+    b->nameProps = {nametag, 10, 2};
 
     DrawRoundedRectangleThick(ren, &b->boxProps);
     DrawRoundedRectangleThick(ren, &b->nameProps);
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
-    auto text_sample = "This is a simple text";
 
-    SetText(b, b->text.c_str(), strlen(b->text.c_str()), ren);
+    SetText(b, b->text, strlen(b->text), ren, w);
 }
