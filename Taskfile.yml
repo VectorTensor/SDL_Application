@@ -11,7 +11,7 @@ tasks:
     desc: building cmake_commands_json
     cmds:
       - echo creating the building cmake_commands_json build files.............
-      - cmake -G "Ninja" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -B build
+      - cmake  -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -B build
     silent: true
   build:
     desc: build the binary
