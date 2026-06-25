@@ -1,23 +1,23 @@
 
 #include "textBox.h"
 #include <SDL3_ttf/SDL_ttf.h>
-#include <math.h>
-#include <string.h>
+#include <cmath>
+#include <cstring>
 
 #include "utils/common/common.h"
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const WorldData *world) {
-    float multipleX = world->width / (float) REFERENCE_X;
-    float multipleY = world->height / (float) REFERENCE_Y;
-    float maxValue = std::max(multipleX, multipleY);
-    int fontSize = 30 * maxValue;
+    const float multipleX = static_cast<float>(world->width) / static_cast<float>(REFERENCE_X);
+    const float multipleY = static_cast<float>(world->height) / static_cast<float>(REFERENCE_Y);
+    const float maxValue = std::max(multipleX, multipleY);
+    const int fontSize = maxValue * 30;
 
 
-    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", fontSize);
-    if (font == NULL) {
-        auto error = SDL_GetError();
+    TTF_Font *font = TTF_OpenFont("assets/fonts/monofur.ttf", static_cast<float>(fontSize));
+    if (font == nullptr) {
+        const auto error = SDL_GetError();
         SDL_Log("Font not found %s", error);
     }
     int tw, th;
@@ -26,13 +26,13 @@ void SetText(TextBox *t, const char *text, size_t size, SDL_Renderer *ren, const
     auto box_rect = t->boxProps.rect;
     switch (t->ha) {
         case ALIGN_LEFT:
-            x = box_rect.x;
+            x = x;
             break;
         case ALIGN_CENTER:
-            x = box_rect.x + (box_rect.w - tw) / 2.0f;
+            x = x + (box_rect.w - static_cast<float>(tw)) / 2.0f;
             break;
         case ALIGN_RIGHT:
-            x = box_rect.x + box_rect.w - tw;
+            x = x + box_rect.w - static_cast<float>(tw);
             break;
     }
 
@@ -105,29 +105,16 @@ void renderRoundedRectangle(SDL_FRect rect, float radius, SDL_Renderer *ren) {
         SDL_RenderPoint(ren, cbr_x + dx, cbr_y + dy);
     }
 }
-void RenderGeometryTest(SDL_Renderer *ren) {
-    SDL_Vertex verts[3] = {
-            {{100, 50}, {255, 0, 0, 255}, {0, 0}}, // top, red
-            {{100, 150}, {0, 255, 0, 255}, {0, 0}}, // bottom-left, green
-            {{150, 150}, {0, 0, 0, 255}, {0, 0}}, // bottom-right, blue
-    };
-    SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
-    SDL_RenderPoint(ren, 100, 50);
-    SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-    SDL_RenderPoint(ren, 100, 150);
-    SDL_SetRenderDrawColor(ren, 0, 0, 255, 255);
-    SDL_RenderPoint(ren, 150, 150);
-}
 
 void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w) {
     SDL_SetRenderDrawColor(ren, 255, 0, 0, 255);
-    float y_box = (float) w->height * 0.7;
-    float h_box = (float) w->height * 0.3;
-    SDL_FRect box = {0, y_box, (float) w->width, h_box};
-    float y_name = (float) w->height * 0.65;
-    float h_name = (float) w->height * 0.05;
-    float w_name = (float) w->width * 0.15;
-    SDL_FRect nametag = {0.0f, y_name, w_name, h_name};
+    const float y_box = static_cast<float>(w->height) * 0.7f;
+    const float h_box = static_cast<float>(w->height) * 0.3f;
+    const SDL_FRect box = {0, y_box, static_cast<float>(w->width), h_box};
+    const float y_name = static_cast<float>(w->height) * 0.65f;
+    const float h_name = static_cast<float>(w->height) * 0.05f;
+    const float w_name = static_cast<float>(w->width) * 0.15f;
+    const SDL_FRect nametag = {0.0f, y_name, w_name, h_name};
     b->boxProps = {box, 10, 2};
     b->nameProps = {nametag, 10, 2};
 
