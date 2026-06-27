@@ -8,8 +8,7 @@
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
-void SetText(const SDL_FRect *boxRect, const char *text, size_t size, SDL_Renderer *ren, const WorldData *world,
-             const VAlign va, const HAlign ha) {
+TTF_Font *LoadFont(const WorldData *world) {
     const float multipleX = static_cast<float>(world->width) / static_cast<float>(REFERENCE_X);
     const float multipleY = static_cast<float>(world->height) / static_cast<float>(REFERENCE_Y);
     const float maxValue = std::max(multipleX, multipleY);
@@ -21,6 +20,13 @@ void SetText(const SDL_FRect *boxRect, const char *text, size_t size, SDL_Render
         const auto error = SDL_GetError();
         SDL_Log("Font not found %s", error);
     }
+
+    return font;
+}
+
+
+void SetText(const SDL_FRect *boxRect, const char *text, size_t size, SDL_Renderer *ren, const WorldData *world,
+             const VAlign va, const HAlign ha, TTF_Font *font) {
     int tw, th;
     TTF_GetStringSize(font, text, 0, &tw, &th);
     float x = 0;
@@ -124,6 +130,6 @@ void RenderTextBox(TextBox *b, SDL_Renderer *ren, const WorldData *w) {
 
     SDL_SetRenderDrawColor(ren, 0, 255, 0, 255);
 
-    SetText(&b->boxProps.rect, b->text, strlen(b->text), ren, w, b->va, b->ha);
-    SetText(&b->nameProps.rect, b->speaker, strlen(b->speaker), ren, w, b->va, b->ha);
+    SetText(&b->boxProps.rect, b->text, strlen(b->text), ren, w, b->va, b->ha, b->font);
+    SetText(&b->nameProps.rect, b->speaker, strlen(b->speaker), ren, w, b->va, b->ha, b->font);
 }

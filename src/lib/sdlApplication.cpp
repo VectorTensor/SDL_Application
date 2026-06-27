@@ -84,6 +84,8 @@ void SDLApplication::MainLoop() {
     textBox.va = ALIGN_MIDDLE;
     strcpy(textBox.text, "Hello ");
     strcpy(textBox.speaker, "Prayash");
+    WorldData world = {width, height};
+    textBox.font = LoadFont(&world);
 
 
     while (mRunning) {
