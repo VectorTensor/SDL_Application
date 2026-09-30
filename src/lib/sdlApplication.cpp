@@ -94,8 +94,7 @@ void SDLApplication::MainLoop() {
         if (currentTick > lastTime + 1000) {
             lastTime = currentTick;
             std::string title;
-            title = std::format("FPS: {}", std::to_string(fps));
-
+            title = "FPS: " + std::to_string(fps);
             SDL_SetWindowTitle(mWindow, title.c_str());
             fps = 0;
         }
