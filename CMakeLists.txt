@@ -20,6 +20,8 @@ add_executable(spriteAnimation src/main.cpp
         src/common/RenderData.h
         src/ui/SpeakerBox/speakerBox.h
         src/ui/SpeakerBox/speakerBox.cpp
+        src/scenes/scene_interface.h
+        src/scenes/scene_interface.cpp
 )
 
 target_include_directories(spriteAnimation PRIVATE src)

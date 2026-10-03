@@ -4,7 +4,6 @@
 #include <SDL3/SDL_log.h>
 #include <SDL3/SDL_timer.h>
 #include <SDL3_ttf/SDL_ttf.h>
-#include <format>
 
 #include "GameObjects/TestGameObject.h"
 #include "ui/textBox.h"
