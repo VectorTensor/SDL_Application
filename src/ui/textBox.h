@@ -19,6 +19,7 @@ typedef enum { ALIGN_LEFT, ALIGN_CENTER, ALIGN_RIGHT } HAlign;
 typedef enum { ALIGN_TOP, ALIGN_MIDDLE, ALIGN_BOTTOM } VAlign;
 
 
+TTF_Font *LoadFont(const WorldData *world);
 void DrawRoundedRectangleThick(SDL_Renderer *renderer, const DialogueUIAttr *diagAttr);
 void renderRoundedRectangle(SDL_FRect rect, float radius, SDL_Renderer *ren);
 
