@@ -4,6 +4,7 @@
 #include <SDL3/SDL_render.h>
 #include <vector>
 
+#include "scenes/scene_interface.h"
 #include "ui/textBox.h"
 #include "utils/GameObject/GameObject.h"
 #include "utils/SpriteAnimator/spriteAnimator.h"
@@ -17,7 +18,8 @@ class SDLApplication {
     std::vector<GameObject *> game_objects;
     int height;
     int width;
-    VnDialogueBox test;
+    TextBox textBox;
+    std::vector<Scene> scenes;
 
 public:
     SDLApplication();

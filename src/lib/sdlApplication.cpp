@@ -1,10 +1,14 @@
 #include "sdlApplication.h"
 
 #include <SDL3/SDL_init.h>
+#include <SDL3/SDL_log.h>
 #include <SDL3/SDL_timer.h>
-#include <format>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #include "GameObjects/TestGameObject.h"
+#include "scenes/scene_interface.h"
+#include "scenes/scenes.h"
+#include "ui/textBox.h"
 #include "utils/GameObject/GameObject.h"
 
 SDLApplication::SDLApplication() {
@@ -15,7 +19,7 @@ SDLApplication::SDLApplication() {
     SDL_CreateWindowAndRenderer("Test Window", width, height, SDL_WINDOW_RESIZABLE, &mWindow, &mRenderer);
 }
 
-void SDLApplication::push_sprite_animator(const SpriteAnimator &sprite_animator) {
+void SDLApplication::push_sprite_animator(const SpriteAnimator& sprite_animator) {
     sprite_animators.push_back(sprite_animator);
 }
 
@@ -38,7 +42,7 @@ void SDLApplication::Input() {
             mRunning = false;
         }
         if (event.type == SDL_EVENT_KEY_DOWN) {
-            for (auto &g: game_objects) {
+            for (auto& g: game_objects) {
                 g->HandleInput(event);
             }
         }
@@ -51,7 +55,7 @@ void SDLApplication::Input() {
 }
 
 void SDLApplication::Update() {
-    for (auto &g: game_objects) {
+    for (auto& g: game_objects) {
         g->Update();
     }
 }
@@ -59,28 +63,34 @@ void SDLApplication::Update() {
 void SDLApplication::Render() {
     SDL_SetRenderDrawColor(mRenderer, 30, 30, 30, 255); // dark gray background
     SDL_RenderClear(mRenderer);
-    // for (auto& s: sprite_animators) {
-    //     s.Render();
-    // }
-    // for (auto &g: game_objects) {
+    // Vn_RenderBox(mRenderer, &this->test);
+    // WorldData world = {width, height};
+    // RenderTextBox(&textBox, mRenderer, &world);
+    // for (auto& g: game_objects) {
     //     g->Render();
     // }
-    // RenderBox(mRenderer, &this->test);
     // Step 2: NOW set green and draw the rect
-    RenderBox(mRenderer, &this->test);
+    render_scenes(this->scenes);
+
     SDL_RenderPresent(mRenderer);
 }
 
 void SDLApplication::MainLoop() {
     Uint64 lastTime = 0;
     Uint64 fps = 0;
-    TestGameObject *test_game_object = new TestGameObject(*mRenderer);
-    test_game_object->Initialize();
-    game_objects.push_back(test_game_object);
-
-    SDL_FRect box = {130.0f, 130.0f, 380.0f, 220.0f};
-
-    this->test.box = box;
+    // TestGameObject* test_game_object = new TestGameObject(*mRenderer);
+    // test_game_object->Initialize();
+    // game_objects.push_back(test_game_object);
+    TTF_Init();
+    // SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
+    textBox.ha = ALIGN_CENTER;
+    textBox.va = ALIGN_MIDDLE;
+    strcpy(textBox.text, "Hello ");
+    strcpy(textBox.speaker, "Prayash");
+    WorldData world = {width, height};
+    textBox.font = LoadFont(&world);
+    // Setup the scene
+    setup_main_menu_scene(this->scenes, this->mWindow, this->mRenderer);
 
 
     while (mRunning) {
@@ -91,12 +101,11 @@ void SDLApplication::MainLoop() {
         if (currentTick > lastTime + 1000) {
             lastTime = currentTick;
             std::string title;
-            title = std::format("FPS: {}", std::to_string(fps));
-
+            title = "FPS: " + std::to_string(fps);
             SDL_SetWindowTitle(mWindow, title.c_str());
             fps = 0;
         }
     }
 
-    delete test_game_object;
+    // delete test_game_object;
 }

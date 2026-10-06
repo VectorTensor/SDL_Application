@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.1.1)
 project(spriteAnimation)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
 find_package(SDL3 CONFIG REQUIRED)
 find_package(SDL3_ttf REQUIRED)
@@ -17,6 +17,15 @@ add_executable(spriteAnimation src/main.cpp
         src/utils/common/common.h
         src/ui/textBox.h
         src/ui/textBox.cpp
+        src/common/RenderData.h
+        src/ui/SpeakerBox/speakerBox.h
+        src/ui/SpeakerBox/speakerBox.cpp
+        src/scenes/scene_interface.h
+        src/scenes/scene_interface.cpp
+        src/scenes/scenes.h
+        src/scenes/main_menu_scene.cpp
+        src/ui/button.cpp
+
 )
 
 target_include_directories(spriteAnimation PRIVATE src)
