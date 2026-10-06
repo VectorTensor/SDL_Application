@@ -18,6 +18,8 @@ private:
     SDL_Texture* texture;
 
     std::string button_asset;
+    int height;
+    int width;
 
     void CreateTexture();
 };

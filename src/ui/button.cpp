@@ -19,6 +19,9 @@ void Button::CreateTexture() {
         return;
     }
     this->texture = SDL_CreateTextureFromSurface(this->renderer, mSurface);
+    height = mSurface->h;
+    width = mSurface->w;
+
     SDL_DestroySurface(mSurface);
 }
 
@@ -26,15 +29,13 @@ void Button::CreateTexture() {
 void Button::RenderButton() const {
     auto srcRect = SDL_FRect{
 
-            0, 0, 1000, 1000
+            0, 0, (float) width, (float) height
 
     };
 
     auto distRect = SDL_FRect{
 
-            0, 0, 100, 100
-
-    };
+            0, 0, (float) width, (float) height};
     if (!SDL_RenderTexture(renderer, this->texture, &srcRect, &distRect)) {
         SDL_Log("SDL_RenderTexture failed: %s", SDL_GetError());
     }
