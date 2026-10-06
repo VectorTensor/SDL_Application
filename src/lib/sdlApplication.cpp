@@ -6,6 +6,8 @@
 #include <SDL3_ttf/SDL_ttf.h>
 
 #include "GameObjects/TestGameObject.h"
+#include "scenes/scene_interface.h"
+#include "scenes/scenes.h"
 #include "ui/textBox.h"
 #include "utils/GameObject/GameObject.h"
 
@@ -62,21 +64,23 @@ void SDLApplication::Render() {
     SDL_SetRenderDrawColor(mRenderer, 30, 30, 30, 255); // dark gray background
     SDL_RenderClear(mRenderer);
     // Vn_RenderBox(mRenderer, &this->test);
-    WorldData world = {width, height};
-    RenderTextBox(&textBox, mRenderer, &world);
-    for (auto& g: game_objects) {
-        g->Render();
-    }
+    // WorldData world = {width, height};
+    // RenderTextBox(&textBox, mRenderer, &world);
+    // for (auto& g: game_objects) {
+    //     g->Render();
+    // }
     // Step 2: NOW set green and draw the rect
+    render_scenes(this->scenes);
+
     SDL_RenderPresent(mRenderer);
 }
 
 void SDLApplication::MainLoop() {
     Uint64 lastTime = 0;
     Uint64 fps = 0;
-    TestGameObject* test_game_object = new TestGameObject(*mRenderer);
-    test_game_object->Initialize();
-    game_objects.push_back(test_game_object);
+    // TestGameObject* test_game_object = new TestGameObject(*mRenderer);
+    // test_game_object->Initialize();
+    // game_objects.push_back(test_game_object);
     TTF_Init();
     // SetText(&this->test, "Hello this is sdl", strlen(textShow), mRenderer);
     textBox.ha = ALIGN_CENTER;
@@ -85,6 +89,8 @@ void SDLApplication::MainLoop() {
     strcpy(textBox.speaker, "Prayash");
     WorldData world = {width, height};
     textBox.font = LoadFont(&world);
+    // Setup the scene
+    setup_main_menu_scene(this->scenes, this->mWindow, this->mRenderer);
 
 
     while (mRunning) {
@@ -101,5 +107,5 @@ void SDLApplication::MainLoop() {
         }
     }
 
-    delete test_game_object;
+    // delete test_game_object;
 }

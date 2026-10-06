@@ -1,13 +1,17 @@
 #include "scene_interface.h"
-#include <memory>
 
 
-template<typename T>
-T& SceneManager::add_scene(std::unique_ptr<T> scene) {
-    static_assert(std::is_base_of_v<Scene, T>, "T must derive from scene");
+Scene* create_scene(const std::string& name, const Context& ctx) {
+    return new Scene{.ctx = ctx, .name = name};
+}
 
-    T& ref = *scene;
+void render_scene(Scene& scene) {
+    scene.ctx.ui_manager.render_ui();
+}
 
-    scenes[std::type_index(typeid(T))] = std::move(scene);
-    return ref;
+
+void render_scenes(std::vector<Scene>& scenes) {
+    for (auto& s: scenes) {
+        render_scene(s);
+    }
 }

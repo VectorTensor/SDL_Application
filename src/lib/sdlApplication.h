@@ -19,7 +19,7 @@ class SDLApplication {
     int height;
     int width;
     TextBox textBox;
-    SceneManager sceneManager;
+    std::vector<Scene> scenes;
 
 public:
     SDLApplication();
