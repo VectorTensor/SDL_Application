@@ -90,7 +90,11 @@ void SDLApplication::MainLoop() {
     WorldData world = {width, height};
     textBox.font = LoadFont(&world);
     // Setup the scene
-    setup_main_menu_scene(this->scenes, this->mWindow, this->mRenderer);
+
+    GameData game_data;
+    game_data.height_p = &height;
+    game_data.width_p = &width;
+    setup_main_menu_scene(this->scenes, this->mWindow, this->mRenderer, game_data);
 
 
     while (mRunning) {

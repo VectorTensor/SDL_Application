@@ -11,4 +11,11 @@ typedef struct {
 
 } WorldData;
 
+
+typedef struct {
+    int* width_p;
+    int* height_p;
+
+} GameData;
+
 #endif // SPRITEANIMATION_RENDERDATA_H
